@@ -308,7 +308,7 @@ table.paper-table tbody tr:last-child td {
   <main id="paper">
 
     <h1 class="paper-title">Supplementary Appendix</h1>
-    <p class="paper-subtitle">TacNAS: Architectural Variants, Prompts &amp; Validation</p>
+    <p class="paper-subtitle">TacEvo: Architectural Variants, Prompts &amp; Validation</p>
 
     <!-- ════════════════════════════════════════════ -->
     <!-- SECTION: Force Variants -->
@@ -539,7 +539,7 @@ Provide the complete class definition here (no
     <!-- ════════════════════════════════════════════ -->
     <h2 class="section-heading" id="sec-hardness">Appendix E. Baseline Model Validation on Hardness Prediction Task</h2>
 
-    <p>The focus of the development of TacNAS in the scope of this project is the application of the pipeline to the Force Regression and Grating Classification tasks. However, these two tasks are relatively easier to be learned when compared to more complex tasks such as Hardness Regression. The main bottleneck in TacNAS's performance on a different task, such as hardness, would be in the robustness of the base architecture (Figure&nbsp;2) at learning that particular task. After validating the baseline's performance, the TacNAS pipeline performance is not expected to differ significantly from the conducted studies, since generating and evaluating variants would only minimally differ in performance from the baseline performance. Therefore, this is a supplementary evaluation and validation of the model's robustness on the hardness dataset sourced from ViTacTip&nbsp;[16].</p>
+    <p>The focus of the development of TacEvo in the scope of this project is the application of the pipeline to the Force Regression and Grating Classification tasks. However, these two tasks are relatively easier to be learned when compared to more complex tasks such as Hardness Regression. The main bottleneck in TacEvo's performance on a different task, such as hardness, would be in the robustness of the base architecture (Figure&nbsp;2) at learning that particular task. After validating the baseline's performance, the TacEvo pipeline performance is not expected to differ significantly from the conducted studies, since generating and evaluating variants would only minimally differ in performance from the baseline performance. Therefore, this is a supplementary evaluation and validation of the model's robustness on the hardness dataset sourced from ViTacTip&nbsp;[16].</p>
 
     <p>The performance of the baseline model on this Hardness Task is presented without any further involvement in NAS. The baseline model was trained with the same parameters as those presented in Section&nbsp;V-A. The final layer was modified to output a single continuous value corresponding to the hardness of the object in Shore units. In Table&nbsp;III the reported <i>R</i><sup>2</sup> value is 0.990, which means that the model was able to explain 99% of the variance present in the data, indicating that the model has fitted well around the dependent variable (predicted hardness values). Also, since the hardness value labels of the dataset ranged between 17.5 and 30.0 Shores, the model provided test error values that are considerably small compared to the prediction range. The Root Mean Squared Error value reports the error in the same units as the prediction, showing a 0.430 error, indicating that the baseline architecture is capable of generalising to tasks and datasets beyond the two analysed in this study.</p>
 
