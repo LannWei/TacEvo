@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TacNAS — Supplementary Appendix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400&family=STIX+Two+Math&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --paper-width: 780px;
+  --sidebar-width: 260px;
+  --gap: 36px;
+  --font-serif: 'STIX Two Text', 'Times New Roman', Times, serif;
+  --font-mono: 'Courier New', Courier, monospace;
+  --color-text: #1a1a1a;
+  --color-muted: #555;
+  --color-rule: #bbb;
+  --color-bg: #f5f5f0;
+  --color-sidebar-bg: #fafaf7;
+  --color-sidebar-active: #d4e4f7;
+  --color-link: #1a5899;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-serif);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.45;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Layout wrapper ── */
+#app {
+  display: flex;
+  max-width: calc(var(--sidebar-width) + var(--gap) + var(--paper-width) + 60px);
+  width: 100%;
+  padding: 0 30px;
+}
+
+/* ── Sidebar / TOC ── */
+#sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  height: 100vh;
+  overflow-y: auto;
+  padding: 32px 16px 32px 0;
+  border-right: 1px solid var(--color-rule);
+  margin-right: var(--gap);
+}
+
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+
+#sidebar .toc-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--color-muted);
+  margin-bottom: 14px;
+}
+
+#sidebar ul { list-style: none; }
+
+#sidebar li { margin-bottom: 2px; }
+
+#sidebar a {
+  display: block;
+  padding: 5px 10px;
+  font-size: 0.82rem;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background .15s;
+  line-height: 1.35;
+}
+
+#sidebar a:hover { background: #eee; }
+#sidebar a.active { background: var(--color-sidebar-active); font-weight: 600; }
+
+#sidebar .toc-l2 { padding-left: 22px; font-size: 0.78rem; color: var(--color-muted); }
+
+/* ── Main paper area ── */
+#paper {
+  flex: 1;
+  max-width: var(--paper-width);
+  background: #fff;
+  padding: 48px 56px 64px;
+  margin: 24px 0;
+  box-shadow: 0 1px 6px rgba(0,0,0,.08);
+}
+
+/* ── Typography ── */
+h1.paper-title {
+  text-align: center;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: .3px;
+  margin-bottom: 6px;
+}
+
+.paper-subtitle {
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--color-muted);
+  margin-bottom: 36px;
+}
+
+h2.section-heading {
+  font-variant: small-caps;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 36px 0 16px;
+  letter-spacing: .5px;
+}
+
+h3.subsection-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-style: italic;
+  margin: 22px 0 8px;
+}
+
+h4.variant-heading {
+  font-variant: small-caps;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 20px 0 8px;
+}
+
+p {
+  text-align: justify;
+  text-indent: 1.5em;
+  margin-bottom: 8px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  hyphens: auto;
+}
+
+p.no-indent { text-indent: 0; }
+
+/* ── Lists ── */
+ul.paper-list {
+  list-style: disc;
+  margin: 6px 0 12px 2.2em;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+ul.paper-list li { margin-bottom: 3px; }
+ul.paper-list li code { font-size: 0.84rem; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: #f4f4f0;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+/* ── Code / listing blocks ── */
+.listing-block {
+  background: #fafaf8;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 16px 18px;
+  margin: 14px 0 18px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+/* ── Tables ── */
+.paper-table-wrapper {
+  margin: 20px auto 24px;
+  text-align: center;
+}
+
+.paper-table-wrapper .table-caption {
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  text-align: center;
+  text-indent: 0;
+}
+
+.paper-table-wrapper .table-caption strong {
+  font-variant: small-caps;
+}
+
+table.paper-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+table.paper-table thead th {
+  font-weight: 700;
+  padding: 6px 18px;
+  border-top: 2px solid #222;
+  border-bottom: 1px solid #222;
+  text-align: left;
+}
+
+table.paper-table tbody td {
+  padding: 5px 18px;
+  text-align: left;
+}
+
+table.paper-table tbody tr:last-child td {
+  border-bottom: 2px solid #222;
+}
+
+/* ── Figure block (reusable) ── */
+.paper-figure {
+  margin: 28px auto 28px;
+  text-align: center;
+  max-width: 92%;
+}
+
+.paper-figure .figure-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #f0f0ec;
+  border: 1.5px dashed #bbb;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.paper-figure .figure-placeholder img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.paper-figure figcaption {
+  font-size: 0.84rem;
+  margin-top: 8px;
+  text-align: justify;
+  line-height: 1.4;
+}
+
+.paper-figure figcaption strong {
+  font-variant: small-caps;
+  font-weight: 700;
+}
+
+/* ── Arrows & math symbols ── */
+.arrow { font-family: 'STIX Two Math', serif; }
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  #app { flex-direction: column; padding: 0 12px; }
+  #sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--color-rule);
+    margin-right: 0;
+    padding: 16px 0;
+  }
+  #paper { padding: 28px 24px 40px; }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- ─── Sidebar / TOC ─── -->
+  <nav id="sidebar">
+    <div class="toc-title">Table of Contents</div>
+    <ul>
+      <li><a href="#sec-force-variants">Architectural Modifications in Force Variants</a></li>
+      <li><a href="#sec-grating-variants">Architectural Modifications in Grating Variants</a></li>
+      <li><a href="#sec-prompts">List of Prompts Used for Force and Grating Tasks</a></li>
+      <li><a href="#sec-force-prompts" class="toc-l2">Force Regression Task Prompts</a></li>
+      <li><a href="#sec-grating-prompts" class="toc-l2">Grating Classification Task Prompts</a></li>
+      <li><a href="#sec-system-prompts">System Prompts</a></li>
+      <li><a href="#sec-force-sys" class="toc-l2">Force Regression System Prompt</a></li>
+      <li><a href="#sec-grating-sys" class="toc-l2">Grating Classification System Prompt</a></li>
+      <li><a href="#sec-hardness">Baseline Model Validation on Hardness Prediction Task</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── Paper Content ─── -->
+  <main id="paper">
+
+    <h1 class="paper-title">Supplementary Appendix</h1>
+    <p class="paper-subtitle">TacNAS: Architectural Variants, Prompts &amp; Validation</p>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION: Force Variants -->
+    <!-- ════════════════════════════════════════════ -->
+    <h2 class="section-heading" id="sec-force-variants">Appendix A. Architectural Modifications in Force Variants</h2>
+
+    <h4 class="variant-heading">Variant 1</h4>
+    <ul class="paper-list">
+      <li>ReLU <span class="arrow">→</span> LeakyReLU</li>
+      <li>Extra Conv layer in every block</li>
+      <li>3 <span class="arrow">→</span> 2 Conv Blocks</li>
+      <li>Spatial Attention Block</li>
+      <li>Less Neurons in FCN hidden layer 512 <span class="arrow">→</span> 256</li>
+      <li>MaxPool <span class="arrow">→</span> strided conv</li>
+    </ul>
+
+    <h4 class="variant-heading">Variant 2</h4>
+    <ul class="paper-list">
+      <li>Extra Conv layer in every block</li>
+      <li>3 <span class="arrow">→</span> 2 Conv Blocks</li>
+      <li>Spatial Attention Block</li>
+      <li>Less Neurons in FCN hidden layer 512 <span class="arrow">→</span> 256</li>
+      <li>MaxPool <span class="arrow">→</span> strided conv</li>
+    </ul>
+
+    <h4 class="variant-heading">Variant 3</h4>
+    <ul class="paper-list">
+      <li>3rd Conv block does three 1x1 conv instead of 3x3 conv</li>
+      <li>Spatial Attention Block</li>
+      <li>MaxPool <span class="arrow">→</span> strided conv</li>
+    </ul>
+
+    <h4 class="variant-heading">Variant 4</h4>
+    <ul class="paper-list">
+      <li>4th Conv Block</li>
+      <li>Spatial Attention block</li>
+      <li>MaxPool <span class="arrow">→</span> strided conv</li>
+    </ul>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION: Grating Variants -->
+    <!-- ════════════════════════════════════════════ -->
+    <h2 class="section-heading" id="sec-grating-variants">Appendix B. Architectural Modifications in Grating Variants</h2>
+
+    <h4 class="variant-heading">Variant 1</h4>
+    <ul class="paper-list">
+      <li>ReLU <span class="arrow">→</span> GELU</li>
+      <li>Wider conv layers</li>
+      <li>2 FCN <span class="arrow">→</span> 4 FCN</li>
+      <li>Removed Dropout</li>
+      <li>Added batchnorm and layernorm after FCN</li>
+    </ul>
+
+    <h4 class="variant-heading">Variant 2</h4>
+    <ul class="paper-list">
+      <li>Wider conv layers</li>
+      <li>2 FCN <span class="arrow">→</span> 4 FCN</li>
+      <li>Removed Dropout</li>
+      <li>Added batchnorm and layernorm after FCN</li>
+    </ul>
+
+    <h4 class="variant-heading">Variant 3</h4>
+    <ul class="paper-list">
+      <li>Wider conv layers</li>
+      <li>ReLU <span class="arrow">→</span> GELU</li>
+      <li>Residual Blocks (skip-connections)</li>
+      <li>2 FCN <span class="arrow">→</span> 4 FCN</li>
+      <li>Removed Dropout</li>
+      <li>Added batchnorm and layernorm after FCN</li>
+    </ul>
+
+    <h4 class="variant-heading">Variant 4</h4>
+    <ul class="paper-list">
+      <li>Wider conv layers</li>
+      <li>Residual Blocks (skip-connections)</li>
+      <li>2 FCN <span class="arrow">→</span> 5 FCN</li>
+      <li>Removed Dropout</li>
+      <li>Added batchnorm and layernorm after FCN</li>
+    </ul>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION: Prompts -->
+    <!-- ════════════════════════════════════════════ -->
+    <h2 class="section-heading" id="sec-prompts">Appendix C. List of Prompts Used for Force and Grating Tasks</h2>
+
+    <!-- Force Prompts -->
+    <h2 class="section-heading" id="sec-force-prompts" style="font-size:1rem;">Force Regression Task Prompts</h2>
+
+    <h3 class="subsection-heading">General Refinement</h3>
+    <ul class="paper-list">
+      <li><code>Refine the model to minimize Mean Squared Error (MSE) for a regression task, without altering the I/O layers.</code></li>
+      <li><code>Re-balance the architecture for a better trade-off between parameter count and prediction accuracy.</code></li>
+    </ul>
+
+    <h3 class="subsection-heading">Width and Channel Adjustments</h3>
+    <ul class="paper-list">
+      <li><code>Widen the convolutional base by increasing the output channels of all `nn.Conv2d` layers by 25%.</code></li>
+      <li><code>Make the regressor head more powerful by increasing its hidden layer neurons from 512 to 1024.</code></li>
+      <li><code>Decrease the networks width by halving the output channels of the `conv1` and `conv2` blocks.</code></li>
+    </ul>
+
+    <h3 class="subsection-heading">Component &amp; Parameter Tuning</h3>
+    <ul class="paper-list">
+      <li><code>Replace the `nn.ReLU` activation functions with `nn.LeakyReLU(negative_slope=0.01)` to handle negative values.</code></li>
+      <li><code>Remove the `nn.Dropout` layer from the regressor head, as it can sometimes harm regression performance.</code></li>
+      <li><code>Change the kernel size in the `conv1` layer to 7x7 for a larger initial receptive field, adjusting padding accordingly.</code></li>
+      <li><code>Replace the `nn.MaxPool2d` layers with a strided convolution with a kernel size of 2 and stride of 2.</code></li>
+    </ul>
+
+    <h3 class="subsection-heading">Layer Addition (Normalization &amp; Regularization)</h3>
+    <ul class="paper-list">
+      <li><code>Insert a `nn.BatchNorm2d` layer within each convolutional block to improve gradient flow.</code></li>
+      <li><code>Add a `nn.LayerNorm` layer to the regressor head for stable activation statistics.</code></li>
+      <li><code>Integrate a simple spatial attention mechanism before the `adaptive_pool` layer.</code></li>
+      <li><code>Incorporate an additional `nn.Linear` layer with 256 neurons into the regressor head.</code></li>
+    </ul>
+
+    <h3 class="subsection-heading">Structural &amp; Final Layer Changes</h3>
+    <ul class="paper-list">
+      <li><code>Introduce a single residual connection that adds the output of `conv1` to the output of `conv3`. Ensure the residual connection has matching spatial dimensions and channels.</code></li>
+      <li><code>Replace the standard convolution in the `conv3` block with a depthwise separable convolution to make the model lighter.</code></li>
+      <li><code>Add a `nn.Sigmoid` activation to the final output layer to ensure all predictions are between 0 and 1.</code></li>
+      <li><code>Add a `nn.Tanh` activation to the final output layer to constrain predictions between &minus;1 and 1.</code></li>
+      <li><code>Add a `nn.Hardtanh` layer to the final output to clip predictions within a specific min-max range.</code></li>
+      <li><code>Refactor the regressor head into its own `nn.Module` class for better encapsulation. Keep the main ImageRegressionCNN class as the primary network class.</code></li>
+      <li><code>Make the model slightly deeper by adding a small convolutional block with 1x1 convolutions after `conv3`.</code></li>
+    </ul>
+
+    <!-- Grating Prompts -->
+    <h2 class="section-heading" id="sec-grating-prompts" style="font-size:1rem;">Grating Classification Task Prompts</h2>
+
+    <h3 class="subsection-heading">General Refinement</h3>
+    <ul class="paper-list">
+      <li><code>Refine the model to achieve higher classification accuracy while preserving the I/O structure.</code></li>
+      <li><code>Optimize the model for faster inference speed by making minor architectural adjustments.</code></li>
+    </ul>
+
+    <h3 class="subsection-heading">Width and Channel Adjustments</h3>
+    <ul class="paper-list">
+      <li><code>Widen the network by increasing the output channels of the `conv2` block by 25%.</code></li>
+      <li><code>Make the network slightly narrower by decreasing the number of neurons in the hidden fully connected layer to 384.</code></li>
+      <li><code>Increase the complexity of the classifier head by adding a second hidden layer with 256 neurons.</code></li>
+    </ul>
+
+    <h3 class="subsection-heading">Component &amp; Parameter Tuning</h3>
+    <ul class="paper-list">
+      <li><code>Replace the `nn.ReLU` activation functions with `nn.GELU` for potentially smoother gradients.</code></li>
+      <li><code>Adjust the dropout probability in the classifier head to 0.6 for stronger regularization.</code></li>
+      <li><code>Change the kernel size in the `conv3` block to 5x5, adjusting padding to maintain the feature map size.</code></li>
+      <li><code>Replace the `nn.MaxPool2d` layers with `nn.AvgPool2d` for a different pooling strategy.</code></li>
+    </ul>
+
+    <h3 class="subsection-heading">Layer Addition (Normalization &amp; Regularization)</h3>
+    <ul class="paper-list">
+      <li><code>Insert a `nn.BatchNorm2d` layer after each `nn.Conv2d` layer to stabilize training. Use LayerNorm instead of BatchNorm in the classifier to avoid batch size issues.</code></li>
+      <li><code>Add a `nn.LayerNorm` layer to the classifier head just before the `nn.ReLU` activation.</code></li>
+      <li><code>Incorporate an additional `nn.Dropout` layer after the first `nn.Linear` layer in the classifier.</code></li>
+    </ul>
+
+    <h3 class="subsection-heading">Structural &amp; Final Layer Changes</h3>
+    <ul class="paper-list">
+      <li><code>Introduce a single residual connection that skips over the `conv2` block.</code></li>
+      <li><code>Change the final activation to a standard `nn.Softmax(dim=1)` for direct probability outputs.</code></li>
+      <li><code>Replace `nn.AdaptiveAvgPool2d` with a combination of adaptive average and max pooling to capture more diverse features.</code></li>
+      <li><code>Refactor the three `nn.Sequential` convolutional blocks into a single custom `nn.Module` for better code organization.</code></li>
+      <li><code>Make the classifier head more lightweight by reducing its hidden layer size and removing dropout.</code></li>
+    </ul>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION: System Prompts -->
+    <!-- ════════════════════════════════════════════ -->
+    <h2 class="section-heading" id="sec-system-prompts">Appendix D. System Prompts</h2>
+
+    <h3 class="subsection-heading" id="sec-force-sys">Force Regression System Prompt</h3>
+    <p class="no-indent">The following system prompt is used to instruct the LLM on how to modify the baseline architecture for the Force Prediction (regression) task.</p>
+
+    <div class="listing-block">You are an expert PyTorch programmer specializing in multi layer
+Convolutional Neural Networks for an image regression task.
+The network should take a 3-channel image as input and output 3
+prediction values.
+Your task is to modify the following ImageRegressionCNN class
+according to the specified instruction.
+The required modification is: {instruction_prompt}
+
+CRITICAL: Provide ONLY the complete, new `class
+    ImageRegressionCNN(nn.Module):` block as your output.
+Do NOT include any markdown formatting, backticks,
+    or code block markers.
+Start directly with the class definition and end
+    with the closing brace.
+
+### Original Code:
+```python
+{base_net_code}
+```
+
+### New Modified Code:
+Provide the complete class definition here (no
+    markdown formatting):</div>
+
+    <h3 class="subsection-heading" id="sec-grating-sys">Grating Classification System Prompt</h3>
+    <p class="no-indent">The following system prompt is used to instruct the LLM on how to modify the baseline architecture for the Grating Classification task.</p>
+
+    <div class="listing-block">You are an expert PyTorch programmer specializing in multi layer
+Convolutional Neural Networks for a single-label classification task.
+Your task is to modify the following SingleLabelClassCNN class
+according to the specified instruction.
+The required modification is: {instruction_prompt}
+
+CRITICAL: Provide ONLY the complete, new `class
+    SingleLabelClassCNN(nn.Module)` block as your output.
+Do NOT include any markdown formatting, backticks,
+    or code block markers.
+Start directly with the class definition and end
+    with the closing brace.
+
+### Original Code:
+```python
+{base_net_code}
+```
+
+### New Modified Code:
+Provide the complete class definition here (no
+    markdown formatting):</div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SECTION: Hardness Validation -->
+    <!-- ════════════════════════════════════════════ -->
+    <h2 class="section-heading" id="sec-hardness">Appendix E. Baseline Model Validation on Hardness Prediction Task</h2>
+
+    <p>The focus of the development of TacNAS in the scope of this project is the application of the pipeline to the Force Regression and Grating Classification tasks. However, these two tasks are relatively easier to be learned when compared to more complex tasks such as Hardness Regression. The main bottleneck in TacNAS's performance on a different task, such as hardness, would be in the robustness of the base architecture (Figure&nbsp;2) at learning that particular task. After validating the baseline's performance, the TacNAS pipeline performance is not expected to differ significantly from the conducted studies, since generating and evaluating variants would only minimally differ in performance from the baseline performance. Therefore, this is a supplementary evaluation and validation of the model's robustness on the hardness dataset sourced from ViTacTip&nbsp;[16].</p>
+
+    <p>The performance of the baseline model on this Hardness Task is presented without any further involvement in NAS. The baseline model was trained with the same parameters as those presented in Section&nbsp;V-A. The final layer was modified to output a single continuous value corresponding to the hardness of the object in Shore units. In Table&nbsp;III the reported <i>R</i><sup>2</sup> value is 0.990, which means that the model was able to explain 99% of the variance present in the data, indicating that the model has fitted well around the dependent variable (predicted hardness values). Also, since the hardness value labels of the dataset ranged between 17.5 and 30.0 Shores, the model provided test error values that are considerably small compared to the prediction range. The Root Mean Squared Error value reports the error in the same units as the prediction, showing a 0.430 error, indicating that the baseline architecture is capable of generalising to tasks and datasets beyond the two analysed in this study.</p>
+
+    <!-- Table III -->
+    <div class="paper-table-wrapper">
+      <p class="table-caption"><strong>Table III:</strong> Performance of the baseline regression model on the hardness prediction test set.</p>
+      <table class="paper-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Mean Squared Error (MSE)</td><td>0.1846</td></tr>
+          <tr><td>Mean Absolute Error (MAE)</td><td>0.3112</td></tr>
+          <tr><td>R-squared (<i>R</i><sup>2</sup>)</td><td>0.9902</td></tr>
+          <tr><td>Root Mean Squared Error (RMSE)</td><td>0.4297 (Shore)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- Placeholder Figure (reusable template) -->
+    <!-- ════════════════════════════════════════════ -->
+    <figure class="paper-figure" id="fig-placeholder">
+      <div class="figure-placeholder">
+        <!-- Replace the text below with an <img> tag, e.g.:
+             <img src="your-image.png" alt="Description"> -->
+        Replace this placeholder with your figure image
+      </div>
+      <figcaption><strong>Fig.&nbsp;X.</strong> Description of the figure goes here. Provide a concise caption that explains the content, axes, and key observations.</figcaption>
+    </figure>
+
+    <!--
+    ══════════════════════════════════════════════════
+    REUSABLE FIGURE TEMPLATE — Copy the block below
+    and paste wherever you need another figure.
+    ══════════════════════════════════════════════════
+
+    <figure class="paper-figure">
+      <div class="figure-placeholder">
+        <img src="path/to/image.png" alt="Description">
+      </div>
+      <figcaption><strong>Fig.&nbsp;N.</strong> Your caption here.</figcaption>
+    </figure>
+
+    ══════════════════════════════════════════════════
+    -->
+
+  </main>
+</div>
+
+<script>
+$(function () {
+  var $links = $('#sidebar a');
+  var sections = [];
+
+  $links.each(function () {
+    var href = $(this).attr('href');
+    if (href && href.charAt(0) === '#') {
+      var $target = $(href);
+      if ($target.length) {
+        sections.push({ link: $(this), target: $target });
+      }
+    }
+  });
+
+  function updateActive() {
+    var scrollTop = $(window).scrollTop() + 80;
+    var active = null;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].target.offset().top <= scrollTop) {
+        active = sections[i];
+      }
+    }
+    $links.removeClass('active');
+    if (active) active.link.addClass('active');
+  }
+
+  $(window).on('scroll', updateActive);
+  updateActive();
+
+  $links.on('click', function (e) {
+    e.preventDefault();
+    var target = $($(this).attr('href'));
+    if (target.length) {
+      $('html, body').animate({ scrollTop: target.offset().top - 24 }, 350);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
